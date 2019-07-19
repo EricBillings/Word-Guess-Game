@@ -2,49 +2,71 @@
 
 const acctWords = ["profit", "asset", "revenue", "equity"];
 let guessRecord = [];
-let i = 0;
+let acctWordInd = -1;
 let gameWord;
 
 
 
-/*NOT WORKING
-let gameWord = (acctWords.indexOf[1]);*/
-
 $("#random-button").on("click", function () {
+    
+    if (acctWordInd < acctWords.length) {
+        
+        acctWordInd++
+        console.log(acctWordInd);
 
 
-    gameWord = acctWords[i];
-    console.log(gameWord);
-    letterArray = gameWord.split("");
+        let gameWord = acctWords[acctWordInd];
+        console.log(gameWord);
+        let letterArray = gameWord.split("");
+        console.log(letterArray);
+        let gameWordLen = letterArray.length;
+        console.log(gameWordLen);
+        let goodGuessCount = 0;
 
+        document.onkeyup = function (event) {
+            const userGuess = event.key;
+            console.log(userGuess);
 
-    document.onkeyup = function (event) {
-        const userGuess = event.key;
+            if (guessRecord.includes(userGuess)) {
+                alert("You already guessed that letter!");
 
-        if (guessRecord.includes(userGuess)) {
-            alert("You already guessed that letter!");
+            } else {
 
-        } else {
-
-            guessRecord.push(userGuess);
-
-            if (guessRecord.length < 16) {
-
-
-                console.log(userGuess);
+                guessRecord.push(userGuess);
                 console.log(guessRecord);
-                console.log(guessRecord.length);
-                console.log(gameWord);
-                console.log(letterArray);
 
+                if (guessRecord.length < 16) {
+                    console.log(guessRecord.length);
 
-                
+                    if (letterArray.includes(userGuess)) {
+                        console.log("Good Choice");
+                        goodGuessCount++;
+                        console.log(goodGuessCount);
+                        console.log(letterArray.length);
+                        if (goodGuessCount === letterArray.length) {
+                            console.log("WIN-NEXT WORD");
+                        } else {
+                            console.log("Try Again");
+                        }
+
+                    } else {
+                        console.log("Bad Choice");
+                    }
+
+                } else {
+                    console.log("Exceeded Max Attempts-Game Over");
+                }
+
 
             }
 
         }
 
+
+    } else {
+        console.log("Game Over");
     }
+
 
 
 });
